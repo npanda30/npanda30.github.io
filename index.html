@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Neha Panda — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #ffffff;
+  --page-bg: #e8e8e6;
+  --graph-line: rgba(160,185,210,0.30);
+  --graph-size: 28px;
+  --purple: #5B4FCF;
+  --purple-light: #EEEDFE;
+  --purple-dark: #3C3489;
+  --purple-hover: #f0effe;
+  --green: #3a7d1e;
+  --green-light: #EAF3DE;
+  --orange: #D4780A;
+  --orange-light: #FEF3E2;
+  --teal: #0F6E56;
+  --teal-light: #E1F5EE;
+  --pink: #993556;
+  --pink-light: #FBEAF0;
+  --blue: #185FA5;
+  --blue-light: #E6F1FB;
+  --ink: #141414;
+  --ink-2: #3a3a3a;
+  --ink-3: #6a6a6a;
+  --ink-4: #9a9a9a;
+  --border: rgba(0,0,0,0.08);
+  --border-mid: rgba(0,0,0,0.13);
+  --margin-w: 56px;
+  --margin-line: rgba(210,90,90,0.22);
+  --sticky-yellow: #FFFDE7;
+  --sticky-shadow: #FFF59D;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Geist', sans-serif;
+  background: var(--page-bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+.page {
+  background-color: var(--white);
+  background-image:
+    linear-gradient(var(--graph-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--graph-line) 1px, transparent 1px);
+  background-size: var(--graph-size) var(--graph-size);
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  min-height: 100vh;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 6px 0 32px rgba(0,0,0,0.1), -2px 0 16px rgba(0,0,0,0.04);
+}
+
+.page::before {
+  content:''; position:absolute; top:0; bottom:0;
+  left:var(--margin-w); width:1px;
+  background:var(--margin-line); z-index:1; pointer-events:none;
+}
+
+.holes {
+  position:fixed; left:calc(50% - 490px); top:0; bottom:0;
+  width:28px; display:flex; flex-direction:column; align-items:center;
+  padding-top:72px; z-index:300; pointer-events:none;
+}
+.hole {
+  width:16px; height:16px; background:var(--page-bg); border-radius:50%;
+  border:1px solid rgba(0,0,0,0.14); margin-bottom:88px; flex-shrink:0;
+  box-shadow:inset 0 1px 3px rgba(0,0,0,0.18);
+}
+
+.pg-num {
+  position:fixed; bottom:1.5rem; right:calc(50% - 490px + 1rem);
+  font-family:'Geist Mono',monospace; font-size:0.62rem;
+  color:var(--ink-4); letter-spacing:0.08em; z-index:300;
+}
+
+/* ── NAV WITH DROPDOWNS ── */
+nav {
+  position:sticky; top:0; z-index:200;
+  background:rgba(255,255,255,0.96); backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--border); height:52px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 2rem 0 calc(var(--margin-w) + 1.5rem);
+}
+
+.nav-id { display:flex; align-items:center; gap:8px; }
+.nav-mono { font-family:'Geist Mono',monospace; font-size:0.68rem; color:var(--ink-4); font-weight:300; }
+.nav-name { font-family:'Caveat',cursive; font-size:1.2rem; font-weight:600; color:var(--ink); text-decoration:none; }
+
+.nav-links { display:flex; gap:0.25rem; list-style:none; align-items:center; }
+
+.nav-item { position:relative; }
+
+.nav-btn {
+  font-family:'Geist Mono',monospace; font-size:0.68rem;
+  color:var(--ink-3); background:none; border:none; cursor:pointer;
+  letter-spacing:0.04em; padding:6px 10px; border-radius:3px;
+  display:flex; align-items:center; gap:4px;
+  transition:color 0.2s, background 0.15s;
+  text-decoration:none;
+}
+.nav-btn:hover { color:var(--purple); background:var(--purple-light); }
+.nav-btn .chevron {
+  display:inline-block; width:8px; height:8px;
+  border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor;
+  transform:rotate(45deg) translateY(-2px);
+  transition:transform 0.2s;
+}
+.nav-item.open .chevron { transform:rotate(-135deg) translateY(-2px); }
+
+.dropdown {
+  position:absolute; top:calc(100% + 6px); right:0;
+  background:var(--white); border:1px solid var(--border);
+  border-radius:4px; min-width:160px;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  opacity:0; transform:translateY(-6px); pointer-events:none;
+  transition:opacity 0.18s, transform 0.18s;
+  z-index:300;
+}
+.nav-item.open .dropdown { opacity:1; transform:translateY(0); pointer-events:auto; }
+
+.dropdown a {
+  display:block; padding:8px 14px;
+  font-family:'Geist Mono',monospace; font-size:0.67rem;
+  color:var(--ink-3); text-decoration:none; letter-spacing:0.03em;
+  transition:color 0.15s, background 0.15s;
+}
+.dropdown a:first-child { border-radius:4px 4px 0 0; }
+.dropdown a:last-child { border-radius:0 0 4px 4px; }
+.dropdown a:hover { color:var(--purple); background:var(--purple-light); }
+.dropdown-divider { border:none; border-top:1px solid var(--border); margin:2px 0; }
+
+/* ── CONTENT ── */
+.content {
+  padding-left:calc(var(--margin-w) + 2rem);
+  padding-right:2.5rem;
+  position:relative; z-index:2;
+}
+
+/* ── HERO ── */
+.hero { padding:4rem 0 3.5rem; position:relative; }
+
+.entry-label {
+  font-family:'Geist Mono',monospace; font-size:0.65rem;
+  color:var(--ink-4); letter-spacing:0.12em; text-transform:uppercase;
+  margin-bottom:1.25rem; display:flex; align-items:center; gap:10px;
+}
+.entry-label::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.sig-field { margin-bottom:0.75rem; position:relative; display:inline-block; }
+.sig-label { font-family:'Geist Mono',monospace; font-size:0.6rem; color:var(--ink-4); letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:4px; }
+.sig-name { font-family:'Caveat',cursive; font-size:clamp(3.5rem,8vw,6rem); font-weight:700; line-height:0.95; color:var(--ink); display:block; }
+.sig-name em { color:var(--purple); font-style:normal; }
+.sig-line { display:block; width:100%; height:2px; background:linear-gradient(90deg,var(--ink) 0%,transparent 100%); margin-top:4px; opacity:0.13; border-radius:1px; }
+.ink-dot { display:inline-block; width:8px; height:8px; background:var(--purple); border-radius:50%; margin-left:6px; vertical-align:middle; opacity:0.7; }
+
+.hero-sub {
+  font-family:'Reenie Beanie',cursive; font-size:1.4rem; color:var(--orange);
+  margin-bottom:1.5rem; letter-spacing:0.02em;
+}
+
+/* RESUME PILL — after tagline */
+.resume-pill {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--purple); color:white;
+  padding:7px 16px 7px 12px; border-radius:2px;
+  font-family:'Geist Mono',monospace; font-size:0.68rem;
+  letter-spacing:0.04em; text-decoration:none;
+  margin-bottom:2rem;
+  transition:background 0.2s, transform 0.15s;
+  box-shadow:2px 2px 0 var(--purple-dark);
+}
+.resume-pill:hover { background:var(--purple-dark); transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--purple-dark); }
+.resume-pill svg { width:13px; height:13px; opacity:0.85; }
+
+/* CONTACT ROW */
+.contact-row {
+  display:flex; flex-wrap:wrap; gap:1rem;
+  margin-bottom:1.75rem; padding:0.75rem 1rem;
+  border:1px solid var(--border); border-radius:2px;
+  background:rgba(248,247,244,0.6); max-width:560px;
+}
+.contact-item {
+  display:flex; align-items:center; gap:6px;
+  font-family:'Geist Mono',monospace; font-size:0.68rem;
+  color:var(--ink-3); letter-spacing:0.03em; text-decoration:none; transition:color 0.2s;
+}
+.contact-item:hover { color:var(--purple); }
+.contact-item svg { width:12px; height:12px; opacity:0.5; flex-shrink:0; }
+
+.hero-bio {
+  font-size:0.94rem; color:var(--ink-2);
+  max-width:500px; line-height:1.9; font-weight:300; margin-bottom:2rem;
+}
+
+.edu-badge {
+  display:inline-flex; align-items:center; gap:5px;
+  font-family:'Geist Mono',monospace; font-size:0.63rem;
+  background:var(--purple-light); color:var(--purple-dark);
+  padding:3px 9px; border-radius:2px;
+  vertical-align:middle; margin:2px 2px;
+  border:1px solid rgba(91,79,207,0.15);
+  white-space:nowrap; line-height:1.4;
+}
+.edu-badge svg { width:10px; height:10px; opacity:0.7; flex-shrink:0; }
+
+.hero-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.chip { font-family:'Geist Mono',monospace; font-size:0.67rem; padding:3px 10px; border:1px solid var(--border); border-radius:2px; color:var(--ink-3); background:rgba(255,255,255,0.7); letter-spacing:0.02em; }
+.chip.hi { border-color:var(--purple); color:var(--purple); background:var(--purple-light); }
+
+/* ── SECTIONS ── */
+.section-wrap { padding:3rem 0; border-top:1px solid var(--border); position:relative; }
+.sec-eyebrow { font-family:'Geist Mono',monospace; font-size:0.65rem; color:var(--ink-4); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.3rem; }
+.sec-title { font-family:'Instrument Serif',serif; font-size:1.9rem; letter-spacing:-0.02em; color:var(--ink); margin-bottom:0.4rem; line-height:1.15; }
+.sec-tagline { font-family:'Reenie Beanie',cursive; font-size:1.35rem; color:var(--orange); margin-bottom:2rem; letter-spacing:0.02em; }
+
+/* ── PROJECTS ── */
+.project-entry { display:grid; grid-template-columns:44px 1fr; gap:0 1.5rem; margin-bottom:2.5rem; }
+.en { font-family:'Geist Mono',monospace; font-size:0.7rem; color:var(--ink-4); padding-top:4px; text-align:right; letter-spacing:0.04em; }
+.eb { border-left:2px solid var(--border); padding-left:1.5rem; padding-bottom:2rem; position:relative; transition:border-color 0.3s; }
+.eb:hover { border-color:var(--purple); }
+.edot { position:absolute; left:-6px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--white); border:2px solid var(--border); transition:border-color 0.3s,background 0.3s; }
+.eb:hover .edot { border-color:var(--purple); background:var(--purple); }
+.e-status { font-family:'Geist Mono',monospace; font-size:0.63rem; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:0.4rem; }
+.s-active { color:var(--green); }
+.s-done { color:var(--ink-4); }
+.e-title { font-family:'Instrument Serif',serif; font-size:1.35rem; letter-spacing:-0.01em; color:var(--ink); margin-bottom:0.55rem; line-height:1.25; }
+.e-desc { font-size:0.865rem; color:var(--ink-2); line-height:1.75; font-weight:300; max-width:540px; margin-bottom:0.9rem; }
+.e-tags { display:flex; flex-wrap:wrap; gap:5px; margin-bottom:0.9rem; }
+.etag { font-family:'Geist Mono',monospace; font-size:0.63rem; padding:2px 7px; border:1px solid var(--border); border-radius:2px; color:var(--ink-4); letter-spacing:0.03em; }
+.e-link { font-family:'Geist Mono',monospace; font-size:0.7rem; color:var(--purple); text-decoration:none; letter-spacing:0.03em; display:inline-flex; align-items:center; gap:4px; transition:gap 0.2s; }
+.e-link:hover { gap:8px; }
+
+/* ── EXPERIENCE — EXPANDABLE ── */
+.filter-bar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:2rem; }
+.fbtn { font-family:'Geist Mono',monospace; font-size:0.67rem; padding:5px 13px; border:1px solid var(--border-mid); border-radius:2px; color:var(--ink-3); background:transparent; cursor:pointer; letter-spacing:0.04em; transition:all 0.18s; }
+.fbtn:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-light); }
+.fbtn.active { background:var(--purple); color:white; border-color:var(--purple); }
+
+.exp-grid { display:flex; flex-direction:column; }
+
+.exp-card {
+  border-left:2px solid var(--border);
+  padding:1.1rem 0 1.1rem 1.5rem;
+  position:relative; cursor:pointer;
+  transition:border-color 0.25s, background 0.2s;
+  border-radius:0 4px 4px 0;
+}
+.exp-card.hidden { display:none; }
+.exp-card:hover { border-color:var(--purple); background:rgba(91,79,207,0.02); }
+.exp-card.expanded { border-color:var(--purple); background:var(--purple-light); border-radius:0 6px 6px 0; }
+
+.exp-dot { position:absolute; left:-6px; top:1.5rem; width:10px; height:10px; border-radius:50%; background:var(--white); border:2px solid var(--border); transition:border-color 0.25s,background 0.25s; }
+.exp-card:hover .exp-dot, .exp-card.expanded .exp-dot { border-color:var(--purple); background:var(--purple); }
+
+.exp-top { display:flex; align-items:flex-start; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+.exp-role { font-family:'Instrument Serif',serif; font-size:1.05rem; color:var(--ink); line-height:1.2; }
+.exp-where { font-family:'Geist Mono',monospace; font-size:0.65rem; color:var(--ink-4); margin-top:2px; letter-spacing:0.03em; }
+.exp-right { display:flex; flex-direction:column; align-items:flex-end; gap:4px; }
+.exp-when { font-family:'Geist Mono',monospace; font-size:0.63rem; color:var(--ink-4); white-space:nowrap; letter-spacing:0.03em; }
+.exp-expand-hint { font-family:'Geist Mono',monospace; font-size:0.6rem; color:var(--purple); opacity:0; transition:opacity 0.2s; letter-spacing:0.04em; }
+.exp-card:hover .exp-expand-hint { opacity:1; }
+.exp-card.expanded .exp-expand-hint { opacity:1; }
+
+.exp-tag-row { display:flex; flex-wrap:wrap; gap:5px; margin-top:0.6rem; }
+.xtag { font-family:'Geist Mono',monospace; font-size:0.6rem; padding:2px 7px; border-radius:2px; font-weight:400; letter-spacing:0.03em; }
+.xt-tech { background:var(--purple-light); color:var(--purple-dark); }
+.xt-healthcare { background:var(--teal-light); color:var(--teal); }
+.xt-education { background:var(--blue-light); color:var(--blue); }
+.xt-research { background:var(--pink-light); color:var(--pink); }
+.xt-science { background:var(--green-light); color:var(--green); }
+.xt-customer { background:var(--orange-light); color:var(--orange); }
+.xt-volunteer { background:#F1EFE8; color:#5F5E5A; }
+.xt-finance { background:#E6F1FB; color:#185FA5; }
+
+/* EXPANDED DETAILS */
+.exp-details {
+  display:none;
+  margin-top:0.9rem;
+  padding-top:0.9rem;
+  border-top:1px solid rgba(91,79,207,0.15);
+  font-size:0.85rem; color:var(--ink-2); line-height:1.7; font-weight:300;
+}
+.exp-card.expanded .exp-details { display:block; }
+
+/* ── STICKY NOTES ── */
+.books-stack { display:flex; flex-direction:column; }
+
+.sticky-note {
+  background:var(--sticky-yellow);
+  border:none; border-radius:1px;
+  padding:1.75rem 1.75rem 2rem;
+  position:relative; max-width:580px;
+  margin-bottom:1.5rem;
+  box-shadow:2px 2px 0 var(--sticky-shadow), 4px 5px 14px rgba(0,0,0,0.09);
+  transition:transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
+}
+.sticky-note:hover { transform:rotate(0.6deg) translateY(-5px) scale(1.01); box-shadow:2px 2px 0 var(--sticky-shadow), 6px 12px 28px rgba(0,0,0,0.13); }
+.sticky-note::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(rgba(0,0,0,0.04),transparent); border-radius:1px 1px 0 0; pointer-events:none; }
+.sticky-note:nth-child(1) { transform:rotate(-0.5deg); }
+.sticky-note:nth-child(1):hover { transform:rotate(0.6deg) translateY(-5px) scale(1.01); }
+.sticky-note:nth-child(2) { transform:rotate(0.8deg); margin-left:2.5rem; }
+.sticky-note:nth-child(2):hover { transform:rotate(1.2deg) translateY(-5px) scale(1.01); }
+.sticky-note:nth-child(3) { transform:rotate(-0.3deg); margin-left:1rem; }
+.sticky-note:nth-child(3):hover { transform:rotate(0.4deg) translateY(-5px) scale(1.01); }
+.sticky-note:nth-child(4) { transform:rotate(0.6deg); margin-left:1.5rem; }
+.sticky-note:nth-child(4):hover { transform:rotate(1deg) translateY(-5px) scale(1.01); }
+.sticky-note:nth-child(5) { transform:rotate(-0.7deg); margin-left:0.5rem; }
+.sticky-note:nth-child(5):hover { transform:rotate(0.3deg) translateY(-5px) scale(1.01); }
+
+.note-genre { font-family:'Geist Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(0,0,0,0.38); margin-bottom:0.5rem; }
+.note-title { font-family:'Instrument Serif',serif; font-size:1.2rem; line-height:1.2; color:rgba(0,0,0,0.82); margin-bottom:0.15rem; }
+.note-author { font-family:'Instrument Serif',serif; font-style:italic; font-size:0.82rem; color:rgba(0,0,0,0.42); margin-bottom:1rem; }
+.note-rule { border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0.75rem 0; }
+.note-hand { font-family:'Caveat',cursive; font-weight:500; font-size:1.1rem; line-height:1.45; margin-bottom:0.75rem; color:rgba(0,0,0,0.72); }
+.note-body { font-size:0.83rem; color:rgba(0,0,0,0.62); line-height:1.7; font-weight:300; }
+
+/* ── RESUME SECTION ── */
+.resume-block { border:1px solid var(--border-mid); border-radius:2px; padding:2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; max-width:560px; transition:border-color 0.2s; }
+.resume-block:hover { border-color:var(--purple); }
+.resume-label { font-family:'Instrument Serif',serif; font-size:1.1rem; color:var(--ink); margin-bottom:0.25rem; }
+.resume-sub { font-family:'Geist Mono',monospace; font-size:0.65rem; color:var(--ink-4); letter-spacing:0.04em; }
+.resume-btn { display:inline-flex; align-items:center; gap:6px; background:var(--purple); color:white; padding:9px 18px; border-radius:2px; font-family:'Geist Mono',monospace; font-size:0.7rem; letter-spacing:0.04em; text-decoration:none; white-space:nowrap; transition:background 0.2s; }
+.resume-btn:hover { background:var(--purple-dark); }
+
+/* ── SCROLL REVEAL ── */
+.reveal { opacity:0; transform:translateY(22px); transition:opacity 0.6s ease,transform 0.6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+.rd1 { transition-delay:0.1s; }
+.rd2 { transition-delay:0.2s; }
+
+/* ── FOOTER ── */
+.foot { border-top:1px solid var(--border); padding:2rem 0; display:flex; align-items:center; justify-content:space-between; }
+.foot-sig { font-family:'Caveat',cursive; font-size:1.3rem; font-weight:600; color:var(--ink-4); }
+.foot-links { display:flex; gap:1.5rem; }
+.foot-links a { font-family:'Geist Mono',monospace; font-size:0.65rem; color:var(--ink-4); text-decoration:none; letter-spacing:0.04em; transition:color 0.2s; }
+.foot-links a:hover { color:var(--purple); }
+
+@media(max-width:980px){ .holes,.pg-num{ display:none; } }
+@media(max-width:660px){
+  .content{ padding-left:calc(var(--margin-w) + 0.75rem); padding-right:1.25rem; }
+  nav{ padding-left:calc(var(--margin-w) + 0.75rem); }
+  .sticky-note:nth-child(n){ margin-left:0; }
+  .contact-row{ gap:0.6rem; }
+  .nav-links { gap:0; }
+}
+</style>
+</head>
+<body>
+
+<div class="holes" aria-hidden="true">
+  <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  <div class="hole"></div><div class="hole"></div><div class="hole"></div>
+  <div class="hole"></div><div class="hole"></div>
+</div>
+
+<div class="page">
+
+<!-- NAV -->
+<nav>
+  <div class="nav-id">
+    <span class="nav-mono">NP-001 /</span>
+    <a href="#" class="nav-name">Neha Panda</a>
+  </div>
+  <ul class="nav-links">
+
+    <!-- About me dropdown -->
+    <li class="nav-item" id="drop-about">
+      <button class="nav-btn" onclick="toggleDrop('drop-about')">
+        about me <span class="chevron"></span>
+      </button>
+      <div class="dropdown">
+        <a href="#projects">projects</a>
+        <a href="#experience">experience</a>
+        <a href="#books">reading</a>
+        <a href="#resume">résumé</a>
+      </div>
+    </li>
+
+    <!-- Links dropdown -->
+    <li class="nav-item" id="drop-links">
+      <button class="nav-btn" onclick="toggleDrop('drop-links')">
+        links <span class="chevron"></span>
+      </button>
+      <div class="dropdown">
+        <a href="https://github.com/npanda30" target="_blank">github ↗</a>
+        <a href="https://linkedin.com/in/nehap2" target="_blank">linkedin ↗</a>
+      </div>
+    </li>
+
+  </ul>
+</nav>
+
+<div class="content">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="entry-label">2026</div>
+
+    <div class="sig-field">
+      <span class="sig-label">signature</span>
+      <span class="sig-name">Neha <em>Panda</em><span class="ink-dot"></span></span>
+      <span class="sig-line"></span>
+    </div>
+
+    <div class="hero-sub">neuroscience + statistics → new horizons</div>
+
+    <!-- RESUME PILL — right after tagline -->
+    <a href="#" target="_blank" class="resume-pill">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      view résumé ↗
+    </a>
+
+    <div class="contact-row">
+      <a href="mailto:nehap2@unc.edu" class="contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+        nehap2@unc.edu
+      </a>
+      <a href="tel:9842188988" class="contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.16 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.11 1.25h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+        (984) 218-8988
+      </a>
+      <a href="https://linkedin.com/in/nehap2" target="_blank" class="contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        linkedin.com/in/nehap2
+      </a>
+      <a href="https://github.com/npanda30" target="_blank" class="contact-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        github.com/npanda30
+      </a>
+    </div>
+
+    <p class="hero-bio">
+      Junior at UNC Chapel Hill
+      <span class="edu-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        B.S. Neuroscience · B.S. Statistics · Minor: Risk Management · GPA 3.95 · exp. 2028
+      </span>
+      studying how the brain and body talk to each other — and what data can tell us when they don't. I work at the intersection of neuroscience, statistics, and public health, building toward a career in healthcare analytics.
+    </p>
+
+    <div class="hero-chips">
+      <span class="chip hi">Python · R</span>
+      <span class="chip">pandas · statsmodels</span>
+      <span class="chip">EEG / MNE</span>
+      <span class="chip">NHANES · epidemiology</span>
+      <span class="chip">scikit-learn · Tableau</span>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section-wrap" id="projects">
+    <div class="sec-eyebrow">§ 01</div>
+    <h2 class="sec-title">Projects</h2>
+    <div class="sec-tagline">active work</div>
+
+    <div class="project-entry reveal">
+      <div class="en">01.</div>
+      <div class="eb">
+        <div class="edot"></div>
+        <div class="e-status s-active">● in progress</div>
+        <div class="e-title">Sleep Duration & Blood Pressure in U.S. Adults</div>
+        <p class="e-desc">Using NHANES 2021–2023 data (n = 5,999) to examine whether self-reported sleep hours predict blood pressure outcomes, moderated by age, sex, or BMI. Linear and logistic regression with full covariate adjustment.</p>
+        <div class="e-tags">
+          <span class="etag">NHANES 2021–23</span><span class="etag">epidemiology</span>
+          <span class="etag">linear regression</span><span class="etag">Python</span>
+          <span class="etag">pandas</span><span class="etag">statsmodels</span>
+        </div>
+        <a href="https://github.com/npanda30/nhanes-sleep-bp" target="_blank" class="e-link">view on github →</a>
+      </div>
+    </div>
+
+    <div class="project-entry reveal rd1">
+      <div class="en">02.</div>
+      <div class="eb">
+        <div class="edot"></div>
+        <div class="e-status s-done">○ complete</div>
+        <div class="e-title">EEG-Based Memory Recognition Classification</div>
+        <p class="e-desc">PCA + Random Forest classifier (200 estimators, balanced class weights) on 27-subject EEG data from OpenNeuro to predict memory recognition states. Leave-One-Subject-Out cross-validation; 71% accuracy.</p>
+        <div class="e-tags">
+          <span class="etag">EEG / MNE-Python</span><span class="etag">random forest</span>
+          <span class="etag">PCA</span><span class="etag">LOSO CV</span><span class="etag">neuroscience</span>
+        </div>
+        <a href="https://github.com/npanda30" target="_blank" class="e-link">view on github →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section-wrap" id="experience">
+    <div class="sec-eyebrow">§ 02</div>
+    <h2 class="sec-title">Experience</h2>
+    <div class="sec-tagline">filter by role</div>
+
+    <div class="filter-bar">
+      <button class="fbtn active" data-f="all">all</button>
+      <button class="fbtn" data-f="tech">tech</button>
+      <button class="fbtn" data-f="healthcare">healthcare</button>
+      <button class="fbtn" data-f="education">education</button>
+      <button class="fbtn" data-f="research">research</button>
+      <button class="fbtn" data-f="science">science</button>
+      <button class="fbtn" data-f="finance">finance</button>
+      <button class="fbtn" data-f="volunteer">volunteer</button>
+      <button class="fbtn" data-f="customer">customer service</button>
+    </div>
+
+    <div class="exp-grid">
+
+      <div class="exp-card reveal" data-tags="tech finance">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Data Engineering Intern</div>
+            <div class="exp-where">Fidelity Investments · Durham, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Jun 2026 – Aug 2026</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-finance">finance</span></div>
+        <div class="exp-details">Add your role description here — what you built, what tools you used, what impact it had.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="tech research healthcare science">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Undergraduate Researcher — EEG & Memory</div>
+            <div class="exp-where">UNC Dept of Psychology & Neuroscience · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2025 – Dec 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-research">research</span><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-science">science</span></div>
+        <div class="exp-details">Preprocessed and analyzed EEG data from 27 participants using MNE-Python, including epoching and artifact rejection. Engineered neural and demographic features and applied dimensionality reduction to build a Random Forest classifier predicting memory recognition states with 71% accuracy. Identified significant differences in brain activity between recognition states.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="tech education volunteer science">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Tech Ethics Education Intern</div>
+            <div class="exp-where">Kigumi Group · Remote</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2024 – Dec 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-education">education</span><span class="xtag xt-volunteer">volunteer/service</span><span class="xtag xt-science">science</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthcare research volunteer">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">NC Impact Fellow</div>
+            <div class="exp-where">Carolina Across 100 Initiative · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Jan 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-research">research</span><span class="xtag xt-volunteer">volunteer/service</span></div>
+        <div class="exp-details">Compiling and visualizing data in Tableau from recent research and medical journalism on NC's youth mental health deficits. Gamifying peer-to-peer understanding of youth mental health in Canva to foster connection and empathy among NC youth.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="education science">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Peer Instructor & Teaching Assistant</div>
+            <div class="exp-where">UNC Depts of Chemistry (CHEM 101) & Biology (BIOL 220) · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Jan 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-education">education</span><span class="xtag xt-science">science</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="tech education volunteer science">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Editor-in-Chief / Design Chair</div>
+            <div class="exp-where">Carolina Scientific Magazine · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">May 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-education">education</span><span class="xtag xt-volunteer">volunteer/service</span><span class="xtag xt-science">science</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="tech volunteer">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Director of Publicity</div>
+            <div class="exp-where">Pearl Hacks · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2025 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-volunteer">volunteer/service</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="tech volunteer">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Advising Member</div>
+            <div class="exp-where">Student Technology Council · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">May 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-volunteer">volunteer/service</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthcare education volunteer science">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">STEAMHEALS Educator</div>
+            <div class="exp-where">STEAMHEALS · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2024 – May 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-education">education</span><span class="xtag xt-volunteer">volunteer/service</span><span class="xtag xt-science">science</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthcare customer">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Patient Sitter</div>
+            <div class="exp-where">UNC Medical Center · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2024 – May 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-customer">customer service</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="education customer">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">ACT Coach</div>
+            <div class="exp-where">Boosted Brains · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">May 2025 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-education">education</span><span class="xtag xt-customer">customer service</span></div>
+        <div class="exp-details">Add your role description here.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BOOKS -->
+  <section class="section-wrap" id="books">
+    <div class="sec-eyebrow">§ 03</div>
+    <h2 class="sec-title">Recent Reads</h2>
+    <div class="sec-tagline">learn with me!</div>
+
+    <div class="books-stack">
+
+      <div class="sticky-note reveal">
+        <div class="note-genre">Pharma · Investigative</div>
+        <div class="note-title">Bottle of Lies</div>
+        <div class="note-author">Katherine Eban</div>
+        <hr class="note-rule">
+        <div class="note-hand">"data fraud doesn't look like fraud — it looks like paperwork"</div>
+        <p class="note-body">Eban's investigation into generic drug manufacturing taught me that regulatory failure isn't dramatic — it's incremental, buried in falsified lab records and intimidated inspectors. Essential reading for anyone who thinks healthcare data is neutral.</p>
+      </div>
+
+      <div class="sticky-note reveal rd1">
+        <div class="note-genre">Technology · Geopolitics</div>
+        <div class="note-title">Chip War</div>
+        <div class="note-author">Chris Miller</div>
+        <hr class="note-rule">
+        <div class="note-hand">"the most important industry in the world runs on physics and politics"</div>
+        <p class="note-body">A reminder that the hardware underlying every analysis I run has a supply chain more fragile than most people realize. Understanding tech at the systems level — not just the code level — shapes how I think about infrastructure risk in healthcare data.</p>
+      </div>
+
+      <div class="sticky-note reveal rd2">
+        <div class="note-genre">Neuroscience · Memoir</div>
+        <div class="note-title">The Mind's Eye</div>
+        <div class="note-author">Oliver Sacks</div>
+        <hr class="note-rule">
+        <div class="note-hand">"the brain doesn't just process the world — it constructs it"</div>
+        <p class="note-body">Sacks writing about his own vision loss while studying perception disorders is the most personal neuroscience I've read. It deepened my understanding of neural plasticity and reminded me why I study the brain — because individual variation is where the real science lives.</p>
+      </div>
+
+      <div class="sticky-note reveal rd1">
+        <div class="note-genre">Fiction · AI · Ethics</div>
+        <div class="note-title">Klara and the Sun</div>
+        <div class="note-author">Kazuo Ishiguro</div>
+        <hr class="note-rule">
+        <div class="note-hand">"what does it mean to observe carefully and still be wrong?"</div>
+        <p class="note-body">Klara is an artificial friend who observes humans with extraordinary precision and still fundamentally misunderstands them. As someone building models of human health data, that tension — between measurement and meaning — stays with me.</p>
+      </div>
+
+      <div class="sticky-note reveal rd2">
+        <div class="note-genre">Medicine · Memoir</div>
+        <div class="note-title">The Tennis Partner</div>
+        <div class="note-author">Abraham Verghese</div>
+        <hr class="note-rule">
+        <div class="note-hand">"medicine is a relationship before it is a science"</div>
+        <p class="note-body">Verghese's account of friendship, addiction, and medicine in a residency program is a reminder that the patients in my NHANES dataset are people with full lives. Healthcare analytics without that awareness produces technically correct answers that miss the point.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- RESUME SECTION -->
+  <section class="section-wrap" id="resume">
+    <div class="sec-eyebrow">§ 04</div>
+    <h2 class="sec-title">Résumé</h2>
+    <div class="resume-block reveal">
+      <div>
+        <div class="resume-label">Neha Panda — Full CV</div>
+        <div class="resume-sub">Neuroscience · Statistics · Risk Management · Healthcare Analytics · 2026</div>
+      </div>
+      <a href="#" target="_blank" class="resume-btn">view résumé ↗</a>
+    </div>
+  </section>
+
+  <div class="foot">
+    <div class="foot-sig">Neha Panda</div>
+    <div class="foot-links">
+      <a href="https://github.com/npanda30" target="_blank">github</a>
+      <a href="https://linkedin.com/in/nehap2" target="_blank">linkedin</a>
+      <a href="mailto:nehap2@unc.edu">email</a>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="pg-num" aria-hidden="true">p. 001</div>
+
+<script>
+// scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }});
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// nav dropdowns
+function toggleDrop(id) {
+  const item = document.getElementById(id);
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-item')) {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('open'));
+  }
+});
+
+// experience filter
+const btns = document.querySelectorAll('.fbtn');
+const cards = document.querySelectorAll('.exp-card');
+btns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    btns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.f;
+    cards.forEach(card => {
+      card.classList.toggle('hidden', f !== 'all' && !card.dataset.tags.includes(f));
+    });
+  });
+});
+
+// expandable cards
+cards.forEach(card => {
+  card.addEventListener('click', () => {
+    const wasExpanded = card.classList.contains('expanded');
+    cards.forEach(c => c.classList.remove('expanded'));
+    if (!wasExpanded) card.classList.add('expanded');
+  });
+});
+</script>
+</body>
+</html>
