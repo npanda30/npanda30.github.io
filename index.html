@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Neha Panda — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&family=Instrument+Serif:ital@0;1&family=Geist+Mono:wght@300;400;500&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Reenie+Beanie&family=Instrument+Serif:ital@0;1&family=Newsreader:wght@400;500;600&family=Geist+Mono:wght@300;400;500;600;700&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -33,7 +33,7 @@
   --ink-4: #9a9a9a;
   --border: rgba(0,0,0,0.08);
   --border-mid: rgba(0,0,0,0.13);
-  --margin-w: 56px;
+  --margin-w: 84px;
   --margin-line: rgba(210,90,90,0.22);
   --sticky-yellow: #FFFDE7;
   --sticky-shadow: #FFF59D;
@@ -70,7 +70,7 @@ body {
 }
 
 .holes {
-  position:fixed; left:calc(50% - 490px); top:0; bottom:0;
+  position:fixed; left:max(28px, calc((100vw - 980px) / 2 + 28px)); top:0; bottom:0;
   width:28px; display:flex; flex-direction:column; align-items:center;
   padding-top:72px; z-index:300; pointer-events:none;
 }
@@ -81,7 +81,7 @@ body {
 }
 
 .pg-num {
-  position:fixed; bottom:1.5rem; right:calc(50% - 490px + 1rem);
+  position:fixed; bottom:1.5rem; right:max(28px, calc((100vw - 980px) / 2 + 28px));
   font-family:'Geist Mono',monospace; font-size:0.62rem;
   color:var(--ink-4); letter-spacing:0.08em; z-index:300;
 }
@@ -95,9 +95,9 @@ nav {
   padding:0 2rem 0 calc(var(--margin-w) + 1.5rem);
 }
 
-.nav-id { display:flex; align-items:center; gap:8px; }
+.nav-id { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .nav-mono { font-family:'Geist Mono',monospace; font-size:0.68rem; color:var(--ink-4); font-weight:300; }
-.nav-name { font-family:'Caveat',cursive; font-size:1.2rem; font-weight:600; color:var(--ink); text-decoration:none; }
+.nav-name { font-family:'Caveat',cursive; font-size:1.2rem; font-weight:600; color:var(--ink); text-decoration:none; white-space:nowrap; }
 
 .nav-links { display:flex; gap:0.25rem; list-style:none; align-items:center; }
 
@@ -172,18 +172,21 @@ nav {
 }
 
 /* RESUME PILL — after tagline */
+.hero-pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:2rem; }
 .resume-pill {
   display:inline-flex; align-items:center; gap:8px;
   background:var(--purple); color:white;
   padding:7px 16px 7px 12px; border-radius:2px;
   font-family:'Geist Mono',monospace; font-size:0.68rem;
   letter-spacing:0.04em; text-decoration:none;
-  margin-bottom:2rem;
-  transition:background 0.2s, transform 0.15s;
+  transition:background 0.2s, transform 0.15s, box-shadow 0.15s, color 0.2s;
   box-shadow:2px 2px 0 var(--purple-dark);
 }
 .resume-pill:hover { background:var(--purple-dark); transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--purple-dark); }
 .resume-pill svg { width:13px; height:13px; opacity:0.85; }
+.resume-pill.ghost { background:#fff; color:var(--purple); box-shadow:2px 2px 0 rgba(91,79,207,0.3); }
+.resume-pill.ghost:hover { background:var(--purple-light); color:var(--purple-dark); box-shadow:3px 3px 0 rgba(91,79,207,0.3); }
+.edu-row { margin-bottom:1.25rem; }
 
 /* CONTACT ROW */
 .contact-row {
@@ -220,10 +223,18 @@ nav {
 .chip { font-family:'Geist Mono',monospace; font-size:0.67rem; padding:3px 10px; border:1px solid var(--border); border-radius:2px; color:var(--ink-3); background:rgba(255,255,255,0.7); letter-spacing:0.02em; }
 .chip.hi { border-color:var(--purple); color:var(--purple); background:var(--purple-light); }
 
+/* ── SKILLS ── */
+.skills { display:flex; flex-direction:column; gap:0.55rem; }
+.skills-eyebrow { font-family:'Geist Mono',monospace; font-weight:700; font-size:0.62rem; color:var(--ink-2); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.15rem; }
+.skill-group { display:flex; align-items:baseline; gap:0.85rem; flex-wrap:wrap; }
+.skill-cat { font-family:'Geist Mono',monospace; font-size:0.58rem; color:var(--ink-4); letter-spacing:0.08em; text-transform:uppercase; width:74px; flex-shrink:0; padding-top:2px; }
+.skill-chips { display:flex; flex-wrap:wrap; gap:6px; }
+@media(max-width:520px){ .skill-cat { width:100%; } }
+
 /* ── SECTIONS ── */
 .section-wrap { padding:3rem 0; border-top:1px solid var(--border); position:relative; }
 .sec-eyebrow { font-family:'Geist Mono',monospace; font-size:0.65rem; color:var(--ink-4); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:0.3rem; }
-.sec-title { font-family:'Instrument Serif',serif; font-size:1.9rem; letter-spacing:-0.02em; color:var(--ink); margin-bottom:0.4rem; line-height:1.15; }
+.sec-title { font-family:'Newsreader',serif; font-weight:500; font-size:2rem; letter-spacing:-0.01em; color:var(--ink); margin-bottom:0.4rem; line-height:1.12; }
 .sec-tagline { font-family:'Reenie Beanie',cursive; font-size:1.35rem; color:var(--orange); margin-bottom:2rem; letter-spacing:0.02em; }
 
 /* ── PROJECTS ── */
@@ -248,6 +259,29 @@ nav {
 .fbtn { font-family:'Geist Mono',monospace; font-size:0.67rem; padding:5px 13px; border:1px solid var(--border-mid); border-radius:2px; color:var(--ink-3); background:transparent; cursor:pointer; letter-spacing:0.04em; transition:all 0.18s; }
 .fbtn:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-light); }
 .fbtn.active { background:var(--purple); color:white; border-color:var(--purple); }
+
+/* RÉSUMÉ SWITCHER — sits above the experience list, follows the filter */
+.resume-switch { display:flex; flex-wrap:wrap; align-items:center; gap:10px; margin-bottom:2rem; }
+.resume-switch-label { font-family:'Geist Mono',monospace; font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-4); margin-right:2px; }
+.rs-btn {
+  display:inline-flex; align-items:center; gap:7px;
+  font-family:'Geist Mono',monospace; font-size:0.67rem; letter-spacing:0.03em;
+  padding:7px 13px; border-radius:2px; text-decoration:none;
+  background:var(--purple); color:#fff;
+  box-shadow:2px 2px 0 var(--purple-dark);
+  transition:background 0.2s, transform 0.15s, box-shadow 0.15s;
+}
+.rs-btn:hover { background:var(--purple-dark); transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--purple-dark); }
+.rs-btn svg { width:12px; height:12px; opacity:0.85; }
+.rs-btn.hidden { display:none; }
+
+/* VOLUNTEER LABEL — small, calm marker in the role title */
+.vol-tag {
+  display:inline-block; vertical-align:middle;
+  font-family:'Geist Mono',monospace; font-size:0.55rem; letter-spacing:0.09em; text-transform:uppercase;
+  color:#8a7b53; background:#F3EFE4; border:1px solid rgba(138,123,83,0.22);
+  padding:1px 6px; border-radius:2px; margin-left:9px; transform:translateY(-2px);
+}
 
 .exp-grid { display:flex; flex-direction:column; }
 
@@ -276,14 +310,11 @@ nav {
 
 .exp-tag-row { display:flex; flex-wrap:wrap; gap:5px; margin-top:0.6rem; }
 .xtag { font-family:'Geist Mono',monospace; font-size:0.6rem; padding:2px 7px; border-radius:2px; font-weight:400; letter-spacing:0.03em; }
-.xt-tech { background:var(--purple-light); color:var(--purple-dark); }
-.xt-healthcare { background:var(--teal-light); color:var(--teal); }
-.xt-education { background:var(--blue-light); color:var(--blue); }
-.xt-research { background:var(--pink-light); color:var(--pink); }
-.xt-science { background:var(--green-light); color:var(--green); }
-.xt-customer { background:var(--orange-light); color:var(--orange); }
-.xt-volunteer { background:#F1EFE8; color:#5F5E5A; }
-.xt-finance { background:#E6F1FB; color:#185FA5; }
+.xt-healthtech { background:var(--teal-light); color:var(--teal); }
+.xt-fintech { background:var(--blue-light); color:var(--blue); }
+.xt-research { background:var(--green-light); color:var(--green); }
+.xt-teaching { background:var(--purple-light); color:var(--purple-dark); }
+.xt-service { background:#F1EFE8; color:#5F5E5A; }
 
 /* EXPANDED DETAILS */
 .exp-details {
@@ -294,38 +325,42 @@ nav {
   font-size:0.85rem; color:var(--ink-2); line-height:1.7; font-weight:300;
 }
 .exp-card.expanded .exp-details { display:block; }
+.exp-details em { color:var(--orange); font-style:italic; font-size:0.78rem; opacity:0.85; }
 
-/* ── STICKY NOTES ── */
-.books-stack { display:flex; flex-direction:column; }
+/* ── STICKY NOTES — SQUARE STACKING ── */
+.books-stack { display:flex; flex-direction:column; align-items:center; padding-bottom:4rem; }
 
 .sticky-note {
   background:var(--sticky-yellow);
-  border:none; border-radius:1px;
-  padding:1.75rem 1.75rem 2rem;
-  position:relative; max-width:580px;
-  margin-bottom:1.5rem;
-  box-shadow:2px 2px 0 var(--sticky-shadow), 4px 5px 14px rgba(0,0,0,0.09);
-  transition:transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s;
+  border:none; border-radius:2px;
+  padding:1.6rem 1.75rem;
+  position:sticky;
+  width:min(420px,100%);
+  aspect-ratio:1 / 1;
+  display:flex; flex-direction:column;
+  margin-bottom:2.25rem;
+  box-shadow:2px 2px 0 var(--sticky-shadow), 5px 10px 26px rgba(0,0,0,0.14);
+  transition:box-shadow 0.3s, transform 0.3s cubic-bezier(.25,.8,.25,1);
+  will-change:transform;
 }
-.sticky-note:hover { transform:rotate(0.6deg) translateY(-5px) scale(1.01); box-shadow:2px 2px 0 var(--sticky-shadow), 6px 12px 28px rgba(0,0,0,0.13); }
-.sticky-note::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(rgba(0,0,0,0.04),transparent); border-radius:1px 1px 0 0; pointer-events:none; }
-.sticky-note:nth-child(1) { transform:rotate(-0.5deg); }
-.sticky-note:nth-child(1):hover { transform:rotate(0.6deg) translateY(-5px) scale(1.01); }
-.sticky-note:nth-child(2) { transform:rotate(0.8deg); margin-left:2.5rem; }
-.sticky-note:nth-child(2):hover { transform:rotate(1.2deg) translateY(-5px) scale(1.01); }
-.sticky-note:nth-child(3) { transform:rotate(-0.3deg); margin-left:1rem; }
-.sticky-note:nth-child(3):hover { transform:rotate(0.4deg) translateY(-5px) scale(1.01); }
-.sticky-note:nth-child(4) { transform:rotate(0.6deg); margin-left:1.5rem; }
-.sticky-note:nth-child(4):hover { transform:rotate(1deg) translateY(-5px) scale(1.01); }
-.sticky-note:nth-child(5) { transform:rotate(-0.7deg); margin-left:0.5rem; }
-.sticky-note:nth-child(5):hover { transform:rotate(0.3deg) translateY(-5px) scale(1.01); }
+.sticky-note::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(rgba(0,0,0,0.05),transparent); border-radius:2px 2px 0 0; pointer-events:none; }
+
+/* each note sticks a little lower than the last, so the stacked edges peek out */
+.sticky-note:nth-child(1) { top:84px;  transform:rotate(-0.6deg); z-index:1; }
+.sticky-note:nth-child(2) { top:100px; transform:rotate(0.5deg);  z-index:2; }
+.sticky-note:nth-child(3) { top:116px; transform:rotate(-0.4deg); z-index:3; }
+.sticky-note:nth-child(4) { top:132px; transform:rotate(0.6deg);  z-index:4; }
+.sticky-note:nth-child(5) { top:148px; transform:rotate(-0.5deg); z-index:5; }
+
+/* hovering a note lifts it above the stack without losing its tilt */
+.sticky-note:hover { z-index:20; box-shadow:2px 2px 0 var(--sticky-shadow), 8px 18px 40px rgba(0,0,0,0.2); }
 
 .note-genre { font-family:'Geist Mono',monospace; font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; color:rgba(0,0,0,0.38); margin-bottom:0.5rem; }
-.note-title { font-family:'Instrument Serif',serif; font-size:1.2rem; line-height:1.2; color:rgba(0,0,0,0.82); margin-bottom:0.15rem; }
-.note-author { font-family:'Instrument Serif',serif; font-style:italic; font-size:0.82rem; color:rgba(0,0,0,0.42); margin-bottom:1rem; }
-.note-rule { border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0.75rem 0; }
-.note-hand { font-family:'Caveat',cursive; font-weight:500; font-size:1.1rem; line-height:1.45; margin-bottom:0.75rem; color:rgba(0,0,0,0.72); }
-.note-body { font-size:0.83rem; color:rgba(0,0,0,0.62); line-height:1.7; font-weight:300; }
+.note-title { font-family:'Instrument Serif',serif; font-size:1.35rem; line-height:1.15; color:rgba(0,0,0,0.82); margin-bottom:0.15rem; }
+.note-author { font-family:'Instrument Serif',serif; font-style:italic; font-size:0.85rem; color:rgba(0,0,0,0.42); margin-bottom:0.6rem; }
+.note-rule { border:none; border-top:1px solid rgba(0,0,0,0.1); margin:0.5rem 0 0.75rem; }
+.note-hand { font-family:'Caveat',cursive; font-weight:500; font-size:1.2rem; line-height:1.4; margin-bottom:0.7rem; color:rgba(0,0,0,0.72); }
+.note-body { font-size:0.82rem; color:rgba(0,0,0,0.62); line-height:1.6; font-weight:300; }
 
 /* ── RESUME SECTION ── */
 .resume-block { border:1px solid var(--border-mid); border-radius:2px; padding:2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; max-width:560px; transition:border-color 0.2s; }
@@ -348,17 +383,112 @@ nav {
 .foot-links a { font-family:'Geist Mono',monospace; font-size:0.65rem; color:var(--ink-4); text-decoration:none; letter-spacing:0.04em; transition:color 0.2s; }
 .foot-links a:hover { color:var(--purple); }
 
-@media(max-width:980px){ .holes,.pg-num{ display:none; } }
+/* ── INTRO INTERCEPT ── */
+.intro {
+  position:fixed; inset:0; z-index:1000;
+  background-color:var(--white);
+  background-image:
+    linear-gradient(var(--graph-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--graph-line) 1px, transparent 1px);
+  background-size:var(--graph-size) var(--graph-size);
+  display:flex; align-items:flex-start; overflow-y:auto;
+  padding:2rem 1.75rem;
+  transition:opacity 0.55s ease, transform 0.55s ease;
+}
+.intro.hide { opacity:0; transform:scale(1.015); pointer-events:none; }
+.intro-inner { max-width:660px; width:100%; margin:auto; }
+.intro-mono { font-family:'Geist Mono',monospace; font-size:0.64rem; color:var(--ink-4); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:1.5rem; display:flex; align-items:center; gap:12px; }
+.intro-mono::after { content:''; flex:1; height:1px; background:var(--border); }
+.intro-prompt { font-family:'Newsreader',serif; font-weight:500; font-size:clamp(2.3rem,6.5vw,3.9rem); line-height:1.05; letter-spacing:-0.02em; color:var(--ink); margin-bottom:2.25rem; }
+.intro-prompt .dots { font-family:'Reenie Beanie',cursive; color:var(--orange); }
+.intro-group { margin-bottom:1.4rem; }
+.intro-cat { font-family:'Geist Mono',monospace; font-size:0.6rem; color:var(--ink-4); letter-spacing:0.1em; text-transform:uppercase; display:block; margin-bottom:0.65rem; }
+.intro-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.ic {
+  font-family:'Geist Mono',monospace; font-size:0.76rem; letter-spacing:0.02em;
+  padding:9px 15px; min-height:40px; border:1px solid var(--border-mid); border-radius:2px;
+  background:rgba(255,255,255,0.8); color:var(--ink-2); cursor:pointer;
+  transition:background 0.16s, color 0.16s, border-color 0.16s, transform 0.12s, box-shadow 0.12s;
+}
+.ic:hover { border-color:var(--purple); color:var(--purple); background:var(--purple-light); }
+.ic.on { background:var(--purple); color:#fff; border-color:var(--purple); box-shadow:2px 2px 0 var(--purple-dark); transform:translate(-1px,-1px); }
+.intro-actions { display:flex; align-items:center; gap:1.5rem; margin-top:2.25rem; flex-wrap:wrap; }
+.intro-go {
+  font-family:'Geist Mono',monospace; font-size:0.78rem; letter-spacing:0.03em;
+  padding:13px 26px; background:var(--ink); color:#fff; border:none; border-radius:2px; cursor:pointer;
+  box-shadow:3px 3px 0 rgba(0,0,0,0.22); transition:transform 0.15s, box-shadow 0.15s, background 0.2s;
+}
+.intro-go:hover { transform:translate(-1px,-1px); box-shadow:4px 4px 0 rgba(0,0,0,0.22); background:var(--orange); }
+.intro-skip { font-family:'Geist Mono',monospace; font-size:0.7rem; color:var(--ink-4); background:none; border:none; cursor:pointer; letter-spacing:0.03em; text-decoration:underline; text-underline-offset:3px; }
+.intro-skip:hover { color:var(--purple); }
+
+/* personalized verdict in hero */
+.need-echo { display:none; font-family:'Caveat',cursive; font-weight:600; font-size:1.6rem; line-height:1.3; color:var(--ink); margin-bottom:0.65rem; }
+.need-echo.show { display:block; }
+.sig-field.verdict .sig-label { display:none; }
+.sig-field.verdict .sig-name { color:var(--purple); }
+.sig-field.verdict .sig-name em { color:var(--purple); }
+.sig-field.verdict .ink-dot { background:var(--purple); }
+.nav-btn.replay { color:var(--purple); }
+
+@media(max-width:760px){ .holes,.pg-num{ display:none; } :root{ --margin-w:40px; } }
+@media(max-width:480px){ :root{ --margin-w:28px; } }
 @media(max-width:660px){
   .content{ padding-left:calc(var(--margin-w) + 0.75rem); padding-right:1.25rem; }
   nav{ padding-left:calc(var(--margin-w) + 0.75rem); }
   .sticky-note:nth-child(n){ margin-left:0; }
   .contact-row{ gap:0.6rem; }
   .nav-links { gap:0; }
+  .nav-mono { display:none; }
 }
 </style>
 </head>
 <body>
+
+<!-- INTRO INTERCEPT -->
+<div class="intro" id="intro">
+  <div class="intro-inner">
+    <div class="intro-mono">NP-001 · for whoever's hiring</div>
+    <h1 class="intro-prompt">I'm looking for<br>someone who's<span class="dots">…</span></h1>
+
+    <div class="intro-group">
+      <span class="intro-cat">as a teammate</span>
+      <div class="intro-chips">
+        <button class="ic" data-kind="trait" data-val="dependable">dependable</button>
+        <button class="ic" data-kind="trait" data-val="organized">organized</button>
+        <button class="ic" data-kind="trait" data-val="takes initiative">takes initiative</button>
+        <button class="ic" data-kind="trait" data-val="a fast learner">a fast learner</button>
+        <button class="ic" data-kind="trait" data-val="easy to work with">easy to work with</button>
+      </div>
+    </div>
+
+    <div class="intro-group">
+      <span class="intro-cat">who can</span>
+      <div class="intro-chips">
+        <button class="ic" data-kind="skill" data-val="write Python">write Python</button>
+        <button class="ic" data-kind="skill" data-val="write R">write R</button>
+        <button class="ic" data-kind="skill" data-val="wrangle messy data">wrangle messy data</button>
+        <button class="ic" data-kind="skill" data-val="build ML models">build ML models</button>
+        <button class="ic" data-kind="skill" data-val="make dashboards">make dashboards</button>
+      </div>
+    </div>
+
+    <div class="intro-group">
+      <span class="intro-cat">excited about</span>
+      <div class="intro-chips">
+        <button class="ic" data-kind="interest" data-val="health tech">health tech</button>
+        <button class="ic" data-kind="interest" data-val="fintech">fintech</button>
+        <button class="ic" data-kind="interest" data-val="STEM research">STEM research</button>
+        <button class="ic" data-kind="interest" data-val="neuroscience">neuroscience</button>
+      </div>
+    </div>
+
+    <div class="intro-actions">
+      <button class="intro-go" id="introGo">see my results →</button>
+      <button class="intro-skip" id="introSkip">skip intro</button>
+    </div>
+  </div>
+</div>
 
 <div class="holes" aria-hidden="true">
   <div class="hole"></div><div class="hole"></div><div class="hole"></div>
@@ -377,16 +507,20 @@ nav {
   </div>
   <ul class="nav-links">
 
+    <!-- Replay intro -->
+    <li class="nav-item">
+      <button class="nav-btn replay" onclick="replayIntro()">↻ intro</button>
+    </li>
+
     <!-- About me dropdown -->
     <li class="nav-item" id="drop-about">
       <button class="nav-btn" onclick="toggleDrop('drop-about')">
         about me <span class="chevron"></span>
       </button>
       <div class="dropdown">
-        <a href="#projects">projects</a>
         <a href="#experience">experience</a>
+        <a href="#projects">projects</a>
         <a href="#books">reading</a>
-        <a href="#resume">résumé</a>
       </div>
     </li>
 
@@ -410,19 +544,27 @@ nav {
   <section class="hero">
     <div class="entry-label">2026</div>
 
+    <div class="need-echo" id="needEcho"></div>
+
     <div class="sig-field">
-      <span class="sig-label">signature</span>
+      <span class="sig-label" id="sigLabel">signature</span>
       <span class="sig-name">Neha <em>Panda</em><span class="ink-dot"></span></span>
       <span class="sig-line"></span>
     </div>
 
     <div class="hero-sub">neuroscience + statistics → new horizons</div>
 
-    <!-- RESUME PILL — right after tagline -->
-    <a href="#" target="_blank" class="resume-pill">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-      view résumé ↗
-    </a>
+    <!-- HERO PILLS -->
+    <div class="hero-pills">
+      <a href="#experience" class="resume-pill">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        view résumé ↓
+      </a>
+      <a href="#projects" class="resume-pill ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        view projects ↓
+      </a>
+    </div>
 
     <div class="contact-row">
       <a href="mailto:nehap2@unc.edu" class="contact-item">
@@ -443,27 +585,259 @@ nav {
       </a>
     </div>
 
-    <p class="hero-bio">
-      Junior at UNC Chapel Hill
+    <div class="edu-row">
       <span class="edu-badge">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-        B.S. Neuroscience · B.S. Statistics · Minor: Risk Management · GPA 3.95 · exp. 2028
+        B.S. Neuroscience · B.S. Statistics · GPA 3.95 · exp. 2028
       </span>
-      studying how the brain and body talk to each other — and what data can tell us when they don't. I work at the intersection of neuroscience, statistics, and public health, building toward a career in healthcare analytics.
+    </div>
+
+    <p class="hero-bio">
+      Junior at UNC Chapel Hill studying how the brain and body talk to each other — and what data can tell us when they don't. I work at the intersection of neuroscience, statistics, and public health, building toward a career in healthcare analytics.
     </p>
 
-    <div class="hero-chips">
-      <span class="chip hi">Python · R</span>
-      <span class="chip">pandas · statsmodels</span>
-      <span class="chip">EEG / MNE</span>
-      <span class="chip">NHANES · epidemiology</span>
-      <span class="chip">scikit-learn · Tableau</span>
+    <div class="skills">
+      <div class="skills-eyebrow">skills</div>
+      <div class="skill-group">
+        <span class="skill-cat">languages</span>
+        <div class="skill-chips">
+          <span class="chip hi">Python</span>
+          <span class="chip hi">R</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-cat">data &amp; ml</span>
+        <div class="skill-chips">
+          <span class="chip">pandas</span>
+          <span class="chip">statsmodels</span>
+          <span class="chip">scikit-learn</span>
+          <span class="chip">Tableau</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <span class="skill-cat">domains</span>
+        <div class="skill-chips">
+          <span class="chip">EEG / MNE</span>
+          <span class="chip">NHANES</span>
+          <span class="chip">epidemiology</span>
+          <span class="chip">neuroscience</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section-wrap" id="experience">
+    <div class="sec-eyebrow">§ 01</div>
+    <h2 class="sec-title">Experience</h2>
+    <div class="sec-tagline">filter by role</div>
+
+    <div class="filter-bar">
+      <button class="fbtn active" data-f="all">all</button>
+      <button class="fbtn" data-f="healthtech">health tech</button>
+      <button class="fbtn" data-f="fintech">fintech</button>
+      <button class="fbtn" data-f="research">stem research</button>
+    </div>
+
+    <div class="resume-switch" id="resumeSwitch">
+      <span class="resume-switch-label">résumé →</span>
+      <a class="rs-btn" data-cat="healthtech" href="resume-health-tech.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        health tech résumé ↓
+      </a>
+      <a class="rs-btn" data-cat="fintech" href="resume-fintech.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        fintech résumé ↓
+      </a>
+      <a class="rs-btn" data-cat="research" href="resume-stem-research.pdf" target="_blank">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        stem research résumé ↓
+      </a>
+    </div>
+
+    <div class="exp-grid">
+
+      <div class="exp-card reveal" data-tags="fintech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Data Engineering Intern</div>
+            <div class="exp-where">Fidelity Investments · Durham, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Jun 2026 – Aug 2026</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-fintech">fintech</span></div>
+        <div class="exp-details">Incoming summer intern on a data engineering team. Expected scope: building and optimizing data pipelines and infrastructure supporting Fidelity's financial data systems. <em>[Draft — update with specific projects after Summer 2026.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="research healthtech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Undergraduate Researcher — EEG & Memory</div>
+            <div class="exp-where">UNC Dept of Psychology & Neuroscience · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2025 – Dec 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-research">stem research</span><span class="xtag xt-healthtech">health tech</span></div>
+        <div class="exp-details">Preprocessed and analyzed EEG data from 27 participants using MNE-Python, including epoching and artifact rejection. Engineered neural and demographic features and applied dimensionality reduction to build a Random Forest classifier predicting memory recognition states with 71% accuracy. Identified significant differences in brain activity between recognition states.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="fintech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Tech Ethics Education Intern <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">Kigumi Group · Remote</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2024 – Dec 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-fintech">fintech</span></div>
+        <div class="exp-details">Designed and delivered educational content on technology ethics — translating complex issues like data privacy, algorithmic bias, and responsible AI into accessible lessons. <em>[Draft — add: audience, deliverables, reach.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthtech research fintech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">NC Impact Fellow <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">Carolina Across 100 Initiative · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Jan 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthtech">health tech</span><span class="xtag xt-research">stem research</span><span class="xtag xt-fintech">fintech</span></div>
+        <div class="exp-details">Compiling and visualizing data in Tableau from recent research and medical journalism on NC's youth mental health deficits. Gamifying peer-to-peer understanding of youth mental health in Canva to foster connection and empathy among NC youth.</div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="research">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Peer Instructor & Teaching Assistant <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">UNC Depts of Chemistry (CHEM 101) & Biology (BIOL 220) · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Jan 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-research">stem research</span></div>
+        <div class="exp-details">Lead weekly problem-solving and review sessions for introductory chemistry (CHEM 101) and biology (BIOL 220), helping students master core concepts and prepare for exams. <em>[Draft — add: # students supported per term.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="research">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Editor-in-Chief / Design Chair <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">Carolina Scientific Magazine · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">May 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-research">stem research</span></div>
+        <div class="exp-details">Direct the editorial and visual identity of UNC's undergraduate science magazine — overseeing article selection, layout, and design to make research accessible to a campus readership. <em>[Draft — add: team size, issues per year, readership.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthtech fintech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Director of Publicity <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">Pearl Hacks · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2025 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthtech">health tech</span><span class="xtag xt-fintech">fintech</span></div>
+        <div class="exp-details">Lead publicity and outreach for Pearl Hacks, one of the largest collegiate hackathons for women and non-binary technologists. <em>[Draft — add: reach/registrations, channels you manage.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthtech fintech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Advising Member</div>
+            <div class="exp-where">Student Technology Council · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">May 2026 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthtech">health tech</span><span class="xtag xt-fintech">fintech</span></div>
+        <div class="exp-details">Advise UNC IT leadership on student technology needs, representing the student voice in decisions on campus tech tools and policy. <em>[Draft — add: specific initiatives you contributed to.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthtech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">STEAMHEALS Educator <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">STEAMHEALS · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2024 – May 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthtech">health tech</span></div>
+        <div class="exp-details">Taught hands-on STEM and health-science lessons, sparking early interest in science and medicine. <em>[Draft — add: grade level/community, # students, subjects, outcomes.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="healthtech">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">Patient Sitter <span class="vol-tag">volunteer</span></div>
+            <div class="exp-where">UNC Medical Center · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">Aug 2024 – May 2025</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-tag-row"><span class="xtag xt-healthtech">health tech</span></div>
+        <div class="exp-details">Provided continuous observation and companionship for patients requiring close monitoring, supporting nursing staff and helping ensure patient safety and comfort. <em>[Draft — add: unit/setting if you'd like.]</em></div>
+      </div>
+
+      <div class="exp-card reveal" data-tags="">
+        <div class="exp-dot"></div>
+        <div class="exp-top">
+          <div>
+            <div class="exp-role">ACT Coach</div>
+            <div class="exp-where">Boosted Brains · Chapel Hill, NC</div>
+          </div>
+          <div class="exp-right">
+            <div class="exp-when">May 2025 – Present</div>
+            <div class="exp-expand-hint">click to expand ↓</div>
+          </div>
+        </div>
+        <div class="exp-details">Coach high school students on ACT content and test-taking strategy across English, math, reading, and science sections. <em>[Draft — add: # students, average score improvement.]</em></div>
+      </div>
+
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section class="section-wrap" id="projects">
-    <div class="sec-eyebrow">§ 01</div>
+    <div class="sec-eyebrow">§ 02</div>
     <h2 class="sec-title">Projects</h2>
     <div class="sec-tagline">active work</div>
 
@@ -499,205 +873,6 @@ nav {
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section class="section-wrap" id="experience">
-    <div class="sec-eyebrow">§ 02</div>
-    <h2 class="sec-title">Experience</h2>
-    <div class="sec-tagline">filter by role</div>
-
-    <div class="filter-bar">
-      <button class="fbtn active" data-f="all">all</button>
-      <button class="fbtn" data-f="tech">tech</button>
-      <button class="fbtn" data-f="healthcare">healthcare</button>
-      <button class="fbtn" data-f="education">education</button>
-      <button class="fbtn" data-f="research">research</button>
-      <button class="fbtn" data-f="science">science</button>
-      <button class="fbtn" data-f="finance">finance</button>
-      <button class="fbtn" data-f="volunteer">volunteer</button>
-      <button class="fbtn" data-f="customer">customer service</button>
-    </div>
-
-    <div class="exp-grid">
-
-      <div class="exp-card reveal" data-tags="tech finance">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Data Engineering Intern</div>
-            <div class="exp-where">Fidelity Investments · Durham, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Jun 2026 – Aug 2026</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-finance">finance</span></div>
-        <div class="exp-details">Add your role description here — what you built, what tools you used, what impact it had.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="tech research healthcare science">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Undergraduate Researcher — EEG & Memory</div>
-            <div class="exp-where">UNC Dept of Psychology & Neuroscience · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Aug 2025 – Dec 2025</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-research">research</span><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-science">science</span></div>
-        <div class="exp-details">Preprocessed and analyzed EEG data from 27 participants using MNE-Python, including epoching and artifact rejection. Engineered neural and demographic features and applied dimensionality reduction to build a Random Forest classifier predicting memory recognition states with 71% accuracy. Identified significant differences in brain activity between recognition states.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="tech education volunteer science">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Tech Ethics Education Intern</div>
-            <div class="exp-where">Kigumi Group · Remote</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Aug 2024 – Dec 2025</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-education">education</span><span class="xtag xt-volunteer">volunteer/service</span><span class="xtag xt-science">science</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="healthcare research volunteer">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">NC Impact Fellow</div>
-            <div class="exp-where">Carolina Across 100 Initiative · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Jan 2026 – Present</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-research">research</span><span class="xtag xt-volunteer">volunteer/service</span></div>
-        <div class="exp-details">Compiling and visualizing data in Tableau from recent research and medical journalism on NC's youth mental health deficits. Gamifying peer-to-peer understanding of youth mental health in Canva to foster connection and empathy among NC youth.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="education science">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Peer Instructor & Teaching Assistant</div>
-            <div class="exp-where">UNC Depts of Chemistry (CHEM 101) & Biology (BIOL 220) · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Jan 2026 – Present</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-education">education</span><span class="xtag xt-science">science</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="tech education volunteer science">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Editor-in-Chief / Design Chair</div>
-            <div class="exp-where">Carolina Scientific Magazine · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">May 2026 – Present</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-education">education</span><span class="xtag xt-volunteer">volunteer/service</span><span class="xtag xt-science">science</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="tech volunteer">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Director of Publicity</div>
-            <div class="exp-where">Pearl Hacks · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Aug 2025 – Present</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-volunteer">volunteer/service</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="tech volunteer">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Advising Member</div>
-            <div class="exp-where">Student Technology Council · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">May 2026 – Present</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-tech">tech</span><span class="xtag xt-volunteer">volunteer/service</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="healthcare education volunteer science">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">STEAMHEALS Educator</div>
-            <div class="exp-where">STEAMHEALS · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Aug 2024 – May 2025</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-education">education</span><span class="xtag xt-volunteer">volunteer/service</span><span class="xtag xt-science">science</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="healthcare customer">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">Patient Sitter</div>
-            <div class="exp-where">UNC Medical Center · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">Aug 2024 – May 2025</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-healthcare">healthcare</span><span class="xtag xt-customer">customer service</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-      <div class="exp-card reveal" data-tags="education customer">
-        <div class="exp-dot"></div>
-        <div class="exp-top">
-          <div>
-            <div class="exp-role">ACT Coach</div>
-            <div class="exp-where">Boosted Brains · Chapel Hill, NC</div>
-          </div>
-          <div class="exp-right">
-            <div class="exp-when">May 2025 – Present</div>
-            <div class="exp-expand-hint">click to expand ↓</div>
-          </div>
-        </div>
-        <div class="exp-tag-row"><span class="xtag xt-education">education</span><span class="xtag xt-customer">customer service</span></div>
-        <div class="exp-details">Add your role description here.</div>
-      </div>
-
-    </div>
-  </section>
-
   <!-- BOOKS -->
   <section class="section-wrap" id="books">
     <div class="sec-eyebrow">§ 03</div>
@@ -706,7 +881,7 @@ nav {
 
     <div class="books-stack">
 
-      <div class="sticky-note reveal">
+      <div class="sticky-note">
         <div class="note-genre">Pharma · Investigative</div>
         <div class="note-title">Bottle of Lies</div>
         <div class="note-author">Katherine Eban</div>
@@ -715,7 +890,7 @@ nav {
         <p class="note-body">Eban's investigation into generic drug manufacturing taught me that regulatory failure isn't dramatic — it's incremental, buried in falsified lab records and intimidated inspectors. Essential reading for anyone who thinks healthcare data is neutral.</p>
       </div>
 
-      <div class="sticky-note reveal rd1">
+      <div class="sticky-note">
         <div class="note-genre">Technology · Geopolitics</div>
         <div class="note-title">Chip War</div>
         <div class="note-author">Chris Miller</div>
@@ -724,7 +899,7 @@ nav {
         <p class="note-body">A reminder that the hardware underlying every analysis I run has a supply chain more fragile than most people realize. Understanding tech at the systems level — not just the code level — shapes how I think about infrastructure risk in healthcare data.</p>
       </div>
 
-      <div class="sticky-note reveal rd2">
+      <div class="sticky-note">
         <div class="note-genre">Neuroscience · Memoir</div>
         <div class="note-title">The Mind's Eye</div>
         <div class="note-author">Oliver Sacks</div>
@@ -733,7 +908,7 @@ nav {
         <p class="note-body">Sacks writing about his own vision loss while studying perception disorders is the most personal neuroscience I've read. It deepened my understanding of neural plasticity and reminded me why I study the brain — because individual variation is where the real science lives.</p>
       </div>
 
-      <div class="sticky-note reveal rd1">
+      <div class="sticky-note">
         <div class="note-genre">Fiction · AI · Ethics</div>
         <div class="note-title">Klara and the Sun</div>
         <div class="note-author">Kazuo Ishiguro</div>
@@ -742,7 +917,7 @@ nav {
         <p class="note-body">Klara is an artificial friend who observes humans with extraordinary precision and still fundamentally misunderstands them. As someone building models of human health data, that tension — between measurement and meaning — stays with me.</p>
       </div>
 
-      <div class="sticky-note reveal rd2">
+      <div class="sticky-note">
         <div class="note-genre">Medicine · Memoir</div>
         <div class="note-title">The Tennis Partner</div>
         <div class="note-author">Abraham Verghese</div>
@@ -754,18 +929,7 @@ nav {
     </div>
   </section>
 
-  <!-- RESUME SECTION -->
-  <section class="section-wrap" id="resume">
-    <div class="sec-eyebrow">§ 04</div>
-    <h2 class="sec-title">Résumé</h2>
-    <div class="resume-block reveal">
-      <div>
-        <div class="resume-label">Neha Panda — Full CV</div>
-        <div class="resume-sub">Neuroscience · Statistics · Risk Management · Healthcare Analytics · 2026</div>
-      </div>
-      <a href="#" target="_blank" class="resume-btn">view résumé ↗</a>
-    </div>
-  </section>
+  <!-- RESUME SECTION removed — résumés now live in the Experience section -->
 
   <div class="foot">
     <div class="foot-sig">Neha Panda</div>
@@ -801,26 +965,75 @@ document.addEventListener('click', e => {
   }
 });
 
-// experience filter
+// experience filter — single-select, drives résumé switcher
 const btns = document.querySelectorAll('.fbtn');
 const cards = document.querySelectorAll('.exp-card');
-btns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    btns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const f = btn.dataset.f;
-    cards.forEach(card => {
-      card.classList.toggle('hidden', f !== 'all' && !card.dataset.tags.includes(f));
-    });
+const rsBtns = document.querySelectorAll('.rs-btn');
+
+function applyFilter(f) {
+  btns.forEach(b => b.classList.toggle('active', b.dataset.f === f));
+  cards.forEach(card => {
+    const tags = (card.dataset.tags || '').split(' ').filter(Boolean);
+    const match = f === 'all' || tags.includes(f);
+    card.classList.toggle('hidden', !match);
   });
-});
+  rsBtns.forEach(b => {
+    b.classList.toggle('hidden', !(f === 'all' || b.dataset.cat === f));
+  });
+}
+
+btns.forEach(btn => btn.addEventListener('click', () => applyFilter(btn.dataset.f)));
+applyFilter('all');
+
+// ── INTRO INTERCEPT ──
+const introEl = document.getElementById('intro');
+const sigLabel = document.getElementById('sigLabel');
+const needEcho = document.getElementById('needEcho');
+const domainMap = { 'health tech':'healthtech', 'fintech':'fintech', 'STEM research':'research' };
+
+document.querySelectorAll('.ic').forEach(b => b.addEventListener('click', () => b.classList.toggle('on')));
+
+function showIntro() { introEl.classList.remove('hide'); document.body.style.overflow = 'hidden'; window.scrollTo(0,0); }
+function hideIntro() { introEl.classList.add('hide'); document.body.style.overflow = ''; }
+
+function finishIntro() {
+  const picks = [...document.querySelectorAll('.ic.on')];
+  needEcho.textContent = 'sounds like you need';
+  needEcho.classList.add('show');
+  document.querySelector('.sig-field').classList.add('verdict');
+  const domains = picks.filter(b => b.dataset.kind === 'interest').map(b => domainMap[b.dataset.val]).filter(Boolean);
+  if (domains.length === 1) applyFilter(domains[0]);
+  sessionStorage.setItem('np_intro_seen', '1');
+  hideIntro();
+}
+
+document.getElementById('introGo').addEventListener('click', finishIntro);
+document.getElementById('introSkip').addEventListener('click', () => { sessionStorage.setItem('np_intro_seen', '1'); hideIntro(); });
+
+function replayIntro() {
+  document.querySelectorAll('.ic.on').forEach(b => b.classList.remove('on'));
+  needEcho.classList.remove('show');
+  document.querySelector('.sig-field').classList.remove('verdict');
+  showIntro();
+}
+window.replayIntro = replayIntro;
+
+if (sessionStorage.getItem('np_intro_seen')) hideIntro(); else showIntro();
 
 // expandable cards
 cards.forEach(card => {
   card.addEventListener('click', () => {
     const wasExpanded = card.classList.contains('expanded');
-    cards.forEach(c => c.classList.remove('expanded'));
-    if (!wasExpanded) card.classList.add('expanded');
+    cards.forEach(c => {
+      c.classList.remove('expanded');
+      const h = c.querySelector('.exp-expand-hint');
+      if (h) h.textContent = 'click to expand ↓';
+    });
+    if (!wasExpanded) {
+      card.classList.add('expanded');
+      const h = card.querySelector('.exp-expand-hint');
+      if (h) h.textContent = 'click to close ↑';
+    }
   });
 });
 </script>
